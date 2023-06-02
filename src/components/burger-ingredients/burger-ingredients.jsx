@@ -32,7 +32,7 @@ export default function BurgerIngredients ({allIngredients}) {
                 <div className='ingredient_type_list'>
                 {allIngredients.map((ingredient) => {
                     if (ingredient.type === 'bun') {
-                        return <IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)} />
+                        return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)} />)
                     }
                 })}
                 </div>
@@ -40,7 +40,7 @@ export default function BurgerIngredients ({allIngredients}) {
                 <div className='ingredient_type_list'>
                 {allIngredients.map((ingredient) => {
                     if (ingredient.type === 'sauce') {
-                        return <IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)}/>
+                        return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)}/>)
                     }
                 })}
                 </div>
@@ -48,15 +48,15 @@ export default function BurgerIngredients ({allIngredients}) {
                 <div className='ingredient_type_list'>
                 {allIngredients.map((ingredient) => {
                     if (ingredient.type === 'main') {
-                        return <IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)}/>
+                        return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)}/>)
                     }
                 })}
                 </div>
             </div>
         </div>
-        { isModalOpen && <Modal onClose={closeModal}>
+        { isModalOpen && (<Modal onClose={closeModal}>
             <IngredientDetails ingredient={currentIngredient}/>
-        </Modal> }
+        </Modal>) }
         </>
     );
 }
