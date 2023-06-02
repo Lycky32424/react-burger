@@ -39,7 +39,7 @@ export default function BurgerConstructor ({allIngredients}) {
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text={bun[0].name}
+                    text={bun[0].name + `\n (верх)`}
                     price={bun[0].price}
                     thumbnail={bun[0].image_mobile}
                     extraClass='ml-6'
@@ -53,7 +53,7 @@ export default function BurgerConstructor ({allIngredients}) {
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text={bun[0].name}
+                    text={bun[0].name + `\n (низ)`}
                     price={bun[0].price}
                     thumbnail={bun[0].image_mobile}
                     extraClass='ml-6'
