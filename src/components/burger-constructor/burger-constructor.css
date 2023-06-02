@@ -1,0 +1,26 @@
+.li_constructor_ingredient {
+    list-style-type: none;
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.burger_constructor_list {
+    overflow-y: scroll;
+    max-height: calc(100vh - 460px);
+}
+
+.ul_burger_constructor {
+    padding-left: 0;
+}
+
+.total_cost {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: absolute;
+    bottom: 30px;
+    right: 160px;
+}

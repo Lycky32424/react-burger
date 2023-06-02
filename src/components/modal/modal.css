@@ -1,0 +1,30 @@
+.overlay {
+    overflow: hidden;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal {
+    z-index: 1000;
+    position: fixed;
+    width: 720px;
+    min-height: 500px;
+    top: 50%;
+    left: 50%;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    transform: translate(-50%, -50%);
+}
+
+.close_button {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    background-color: inherit;
+    border: none;
+}
