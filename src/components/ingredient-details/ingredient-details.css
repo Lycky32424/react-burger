@@ -1,0 +1,21 @@
+.ingredient_details {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    line-height: 1.5;
+    gap: 8px;
+}
+
+.value {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.ingredient_details_header {
+    text-align: start;
+}
+
+p {
+    margin: 0;
+}

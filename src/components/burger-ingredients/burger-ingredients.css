@@ -1,0 +1,15 @@
+.ingredients_list {
+    margin-left: 40px;
+    overflow-y: scroll;
+    max-height: calc(100vh - 250px);
+}
+
+.ingredient_type_list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 240px);
+    /* grid-template-rows: repeat(auto-fill, 200px); */
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+}
