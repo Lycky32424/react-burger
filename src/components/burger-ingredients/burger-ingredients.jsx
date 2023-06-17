@@ -4,20 +4,130 @@ import IngredientCard from '../ingridient-card/ingridient-card';
 import Modal from '../modal/modal';
 import './burger-ingredients.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import IngredientPropTypes from '../../utils/ingredients-prop-types';
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions/getIngredients';
+import { selectBun } from '../../services/actions/constructorIngredients';
+import { ADD_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT } from '../../services/actions/currentIngredient';
+import { OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/toggleModal';
+import { SET_MAINS_TAB, SET_SAUCES_TAB, SET_BUNS_TAB } from '../../services/actions/ingredientsTabs';
 
-export default function BurgerIngredients ({allIngredients}) {
-    const [isModalOpen, toggleModal] = React.useState(false);
-    const [currentIngredient, setCurrentIngredient] = React.useState({});
+
+export default function BurgerIngredients () {
+    const dispatch = useDispatch();
+    const { ingredients, ingredientsRequest } = useSelector(state => state.ingredients);
+    const { currentIngredient } = useSelector(state => state.currentIngredient);
+    const { isModalOpened } = useSelector(state => state.toggleModal);
+
+    React.useEffect(
+        () => {
+          dispatch(getIngredients());
+        },
+        [dispatch]
+    );
+
+    React.useEffect(
+        () => {
+            const selectedBuns = ingredients.filter((ingredient) => {
+                return ingredient.type === 'bun';
+            });
+            dispatch(selectBun(selectedBuns[0]));
+        },
+        [ingredientsRequest, ingredients, dispatch]
+    );
+
+    const buns = React.useMemo(
+        () => {
+            return ingredientsRequest ? 
+            [] :
+            ingredients.map((ingredient) => {
+                if (ingredient.type === 'bun') {
+                    return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)} />)
+                }
+            })
+        },
+        [ingredientsRequest, ingredients]
+    );
+
+    const sauces = React.useMemo(
+        () => {
+            return ingredientsRequest ?
+            [] :
+            ingredients.map((ingredient) => {
+                if (ingredient.type === 'sauce') {
+                    return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)} />)
+                }
+            })
+        },
+        [ingredientsRequest, ingredients]
+    );
+
+    const mains = React.useMemo(
+        () => {
+            return ingredientsRequest ?
+            [] :
+            ingredients.map((ingredient) => {
+                if (ingredient.type === 'main') {
+                    return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)}/>)
+                }
+            })
+        },
+        [ingredientsRequest, ingredients]
+    );
 
     const openModal = (ingredient) => {
-        setCurrentIngredient(ingredient);
-        toggleModal(true);
+        dispatch({
+            type: ADD_CURRENT_INGREDIENT,
+            currentIngredient: ingredient
+        });
+        dispatch({
+            type: OPEN_MODAL
+        });
     }
 
     const closeModal = () => {
-        toggleModal(false);
+        dispatch({
+            type: REMOVE_CURRENT_INGREDIENT
+        });
+        dispatch({
+            type: CLOSE_MODAL
+        });
+    }
+
+    const setBunsTab = () => {
+        dispatch({
+            type: SET_BUNS_TAB
+        });
+    }
+    const setSaucesTab = () => {
+        dispatch({
+            type: SET_SAUCES_TAB
+        });
+    }
+    const setMainsTab = () => {
+        dispatch({
+            type: SET_MAINS_TAB
+        });
+    }
+
+    const containerRef = React.useRef();
+    const bunsRef = React.useRef();
+    const saucesRef = React.useRef();
+    const mainsRef = React.useRef();
+    const onScroll = () => {
+        if (containerRef.current.getBoundingClientRect().top >
+            bunsRef.current.getBoundingClientRect().top) {
+                setBunsTab();
+        }
+      
+        if (containerRef.current.getBoundingClientRect().top >
+            saucesRef.current.getBoundingClientRect().top) {
+                setSaucesTab();
+        }
+      
+        if (containerRef.current.getBoundingClientRect().top >
+            mainsRef.current.getBoundingClientRect().top) {
+                setMainsTab();
+        }
     }
 
     return (
@@ -27,40 +137,24 @@ export default function BurgerIngredients ({allIngredients}) {
                 Соберите бургер
             </h1>
             <IngredientsTab />
-            <div className='custom-scroll ingredients_list'>
-                <h2>Булки</h2>
+            <div className='custom-scroll ingredients_list' onScroll={onScroll} ref={containerRef}>
+                <h2 ref={bunsRef}>Булки</h2>
                 <div className='ingredient_type_list'>
-                {allIngredients.map((ingredient) => {
-                    if (ingredient.type === 'bun') {
-                        return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)} />)
-                    }
-                })}
+                {buns}
                 </div>
-                <h2>Соусы</h2>
+                <h2 ref={saucesRef}>Соусы</h2>
                 <div className='ingredient_type_list'>
-                {allIngredients.map((ingredient) => {
-                    if (ingredient.type === 'sauce') {
-                        return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)}/>)
-                    }
-                })}
+                {sauces}
                 </div>
-                <h2>Начинки</h2>
+                <h2 ref={mainsRef}>Начинки</h2>
                 <div className='ingredient_type_list'>
-                {allIngredients.map((ingredient) => {
-                    if (ingredient.type === 'main') {
-                        return (<IngredientCard ingredient={ingredient} key={ingredient._id} onClick={() => openModal(ingredient)}/>)
-                    }
-                })}
+                {mains}
                 </div>
             </div>
         </div>
-        { isModalOpen && (<Modal onClose={closeModal}>
-            <IngredientDetails ingredient={currentIngredient}/>
+        { isModalOpened && currentIngredient && (<Modal onClose={closeModal}>
+            <IngredientDetails />
         </Modal>) }
         </>
     );
 }
-
-BurgerIngredients.propTypes = {
-    allIngredients: PropTypes.arrayOf(IngredientPropTypes.isRequired).isRequired
-};

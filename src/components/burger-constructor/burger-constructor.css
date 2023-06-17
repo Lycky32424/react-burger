@@ -1,14 +1,6 @@
-.li_constructor_ingredient {
-    list-style-type: none;
-    padding-bottom: 16px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 4px;
-}
-
 .burger_constructor_list {
     overflow-y: scroll;
+    min-height: 200px;
     max-height: calc(100vh - 460px);
 }
 

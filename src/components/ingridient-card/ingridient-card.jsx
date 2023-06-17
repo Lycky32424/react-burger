@@ -2,19 +2,47 @@ import React from 'react';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import './ingridient-card.css';
 import PropTypes from "prop-types";
+import { useDrag } from 'react-dnd';
+import { useSelector } from 'react-redux';
 
 export default function IngredientCard ({ingredient, onClick}) {
+    const { constructorIngredients, selectedBun } = useSelector(state => state.constructorIngredients);
+
+    const [{opacity}, ref] = useDrag({
+        type: ingredient.type,
+        item: {...ingredient},
+        collect: monitor => ({
+            opacity: monitor.isDragging() ? 0.5 : 1
+        })
+    });
+
+    const count = React.useMemo(
+        () => {
+            if (selectedBun) {
+                if(ingredient.type === "bun") {
+                    return ingredient._id === selectedBun._id ? 2 : null;
+                } else {
+                    const itemsCount = constructorIngredients.filter(item => item.ingredient._id === ingredient._id).length;
+                    return itemsCount > 0 ? itemsCount : null;
+                }
+            }
+            return null;
+            
+        },
+        [constructorIngredients, selectedBun]
+    );
+
     return (
-        <div className='ingridient_card' onClick={onClick}>
+        <div className='ingridient_card' onClick={onClick} ref={ref} style={{opacity}}>
             <img src={ingredient.image} alt={ingredient.name} />
             <div className='card_price'>
                 {ingredient.price}
                 <CurrencyIcon type="primary" />
             </div>
             <span>{ingredient.name}</span>
-            <div className='card_counter'>
-                <Counter count={1} size="default" extraClass="m-1" />
-            </div>
+            {count && <div className='card_counter'>
+                <Counter count={count} size="default" extraClass="m-1" />
+            </div>}
         </div>
     );
 }
