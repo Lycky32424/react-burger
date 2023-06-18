@@ -2,6 +2,7 @@ import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_MAINS_TAB, SET_SAUCES_TAB, SET_BUNS_TAB } from '../../services/actions/ingredientsTabs';
+import styles from './ingredients-tab.module.css';
 
 export default function IngredientsTab () {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export default function IngredientsTab () {
     }
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div className={styles.tabs}>
             <Tab value="buns" active={currentTab === 'buns'} onClick={setBunsTab}>
                 Булки
             </Tab>

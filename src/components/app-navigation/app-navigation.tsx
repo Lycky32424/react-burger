@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import './app-navigation.css'
+import styles from './app-navigation.module.css'
 
 
 export default function AppNavigation () {
@@ -33,13 +33,13 @@ export default function AppNavigation () {
     }, [currentPage]);
 
     return (
-        <nav className='nav pt-4 pb-4'>
+        <nav className={`${styles.nav} pt-4 pb-4`}>
             {
                 pages.map((page, i) => {
                     return (
                         <Button htmlType="button" type="secondary" size="medium" onClick={() => setCurrentPage(i)} key={i}
-                        { ...currentPage === i ? {extraClass: 'nav_button pl-5 pr-5 active_nav_button'} 
-                        : {extraClass: 'nav_button pl-5 pr-5 text_color_inactive'}}>
+                        { ...currentPage === i ? {extraClass: `${styles.nav_button} pl-5 pr-5 ${styles.active_nav_button}`} 
+                        : {extraClass: `${styles.nav_button} pl-5 pr-5 text_color_inactive`}}>
                             <div className='pr-2'>
                                 {icons[i]}
                             </div>

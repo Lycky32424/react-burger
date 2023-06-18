@@ -1,6 +1,6 @@
 import React from 'react';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import './burger-constructor.css';
+import styles from './burger-constructor.module.css';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,6 +26,9 @@ export default function BurgerConstructor () {
                     selectedBun: ingredient
                 })
             } else {
+                if(!selectedBun) {
+                    return;
+                }
                 dispatch({
                     type: ADD_INGREDIENT,
                     ingredient: ingredient
@@ -42,6 +45,9 @@ export default function BurgerConstructor () {
     }
 
     const openModal = () => {
+        if (!selectedBun) {
+            return;
+        }
         const orderIds = constructorIngredients.map(ingredient => ingredient.ingredient._id)
         dispatch(postOrder([selectedBun._id, ...orderIds, selectedBun._id]));
         dispatch({
@@ -84,7 +90,10 @@ export default function BurgerConstructor () {
 
     return(
         <div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }} className='mt-20' ref={dropTarget}>
+            <div className={`mt-20 ${styles.drop_area}`} ref={dropTarget}>
+                {!selectedBun && (<h2>
+                        Пожалуйста, перетащите сюда выбранную булку для бургера, добавьте ингридиенты и сделайте заказ
+                    </h2>)}
                 {selectedBun && (<ConstructorElement
                     type="top"
                     isLocked={true}
@@ -94,8 +103,8 @@ export default function BurgerConstructor () {
                     extraClass='ml-6'
                     key={selectedBun._id+1}
                 />)}
-                <div className='custom-scroll burger_constructor_list'> 
-                    <ul className='ul_burger_constructor pr-2'>
+                <div className={`custom-scroll ${styles.burger_constructor_list} ${selectedBun?styles.use_scroll:''}`}> 
+                    <ul className={`${styles.ul_burger_constructor} pr-2`}>
                         {ingredients}
                     </ul>
                 </div>
@@ -109,7 +118,7 @@ export default function BurgerConstructor () {
                     key={selectedBun._id}
                 />)}
             </div>
-            <div className='total_cost'>
+            <div className={styles.total_cost}>
                 <span>{totalCost}</span>
                 <CurrencyIcon type="primary" />
                 <Button htmlType="button" type="primary" size="medium" extraClass="ml-2" onClick={openModal}>

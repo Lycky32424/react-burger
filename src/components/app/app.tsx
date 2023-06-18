@@ -1,18 +1,18 @@
 import React from 'react';
-import AppHeader from './components/app-header/app-header';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from './components/burger-constructor/burger-constructor';
+import AppHeader from './../app-header/app-header';
+import BurgerIngredients from './../burger-ingredients/burger-ingredients';
+import BurgerConstructor from './../burger-constructor/burger-constructor';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 
-import './App.css';
+import styles from './app.module.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className={styles.app}>
       <DndProvider backend={HTML5Backend}>
         <AppHeader />
-        <main className='main'>
+        <main className={styles.main}>
           <BurgerIngredients/>
           <BurgerConstructor />
         </main>   

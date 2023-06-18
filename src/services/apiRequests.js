@@ -1,27 +1,23 @@
-const apiLinc = "https://norma.nomoreparties.space/api/ingredients";
-const orderPostLinc = "https://norma.nomoreparties.space/api/orders";
+const BASE_URL = "https://norma.nomoreparties.space/api";
 
-export const getIngredientsData = async () => {
-    try {
-        const data = await fetch(apiLinc).then(res => {if (res.ok) {
-                return res.json(); 
-            } else { return Promise.reject(res.status) }
-        })
-        return data.data;
-    } catch (error) {
-        throw new Error('Ошибка');
+export const sendRequest = async ( url, options) => {
+    const data = await fetch(`${BASE_URL}/${url}`, options).then(res =>  checkResponse(res));
+    return data;
+}
+
+export const checkResponse = (res) => {
+    if(res.ok) {
+        return res.json();
+    } else {
+        return Promise.reject(res.status);
     }
 }
 
-export const postOrderRequest = async (ingredients) => {
+export const prerareRequest = async (url, options) => {
     try {
-        const res = await fetch(orderPostLinc, ingredients).then(res => {
-            if(res.ok) {
-                return res.json();
-            } else { return Promise.reject(res.status) }
-        })
-        return res;
+        const data = await sendRequest(url, options);
+        return data;
     } catch (error) {
-        throw new Error('Ошибка')
+        throw new Error('Ошибка');
     }
 }

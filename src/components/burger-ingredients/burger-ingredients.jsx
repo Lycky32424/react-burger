@@ -2,11 +2,10 @@ import React from 'react';
 import IngredientsTab from '../ingredients-tab/ingredients-tab';
 import IngredientCard from '../ingridient-card/ingridient-card';
 import Modal from '../modal/modal';
-import './burger-ingredients.css';
+import styles from './burger-ingredients.module.css';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredients } from '../../services/actions/getIngredients';
-import { selectBun } from '../../services/actions/constructorIngredients';
 import { ADD_CURRENT_INGREDIENT, REMOVE_CURRENT_INGREDIENT } from '../../services/actions/currentIngredient';
 import { OPEN_MODAL, CLOSE_MODAL } from '../../services/actions/toggleModal';
 import { SET_MAINS_TAB, SET_SAUCES_TAB, SET_BUNS_TAB } from '../../services/actions/ingredientsTabs';
@@ -23,16 +22,6 @@ export default function BurgerIngredients () {
           dispatch(getIngredients());
         },
         [dispatch]
-    );
-
-    React.useEffect(
-        () => {
-            const selectedBuns = ingredients.filter((ingredient) => {
-                return ingredient.type === 'bun';
-            });
-            dispatch(selectBun(selectedBuns[0]));
-        },
-        [ingredientsRequest, ingredients, dispatch]
     );
 
     const buns = React.useMemo(
@@ -137,17 +126,17 @@ export default function BurgerIngredients () {
                 Соберите бургер
             </h1>
             <IngredientsTab />
-            <div className='custom-scroll ingredients_list' onScroll={onScroll} ref={containerRef}>
+            <div className={`custom-scroll ${styles.ingredients_list}`} onScroll={onScroll} ref={containerRef}>
                 <h2 ref={bunsRef}>Булки</h2>
-                <div className='ingredient_type_list'>
+                <div className={styles.ingredient_type_list}>
                 {buns}
                 </div>
                 <h2 ref={saucesRef}>Соусы</h2>
-                <div className='ingredient_type_list'>
+                <div className={styles.ingredient_type_list}>
                 {sauces}
                 </div>
                 <h2 ref={mainsRef}>Начинки</h2>
-                <div className='ingredient_type_list'>
+                <div className={styles.ingredient_type_list}>
                 {mains}
                 </div>
             </div>

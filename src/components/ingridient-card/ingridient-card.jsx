@@ -1,6 +1,6 @@
 import React from 'react';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import './ingridient-card.css';
+import styles from './ingridient-card.module.css';
 import PropTypes from "prop-types";
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
@@ -33,14 +33,14 @@ export default function IngredientCard ({ingredient, onClick}) {
     );
 
     return (
-        <div className='ingridient_card' onClick={onClick} ref={ref} style={{opacity}}>
+        <div className={styles.ingridient_card} onClick={onClick} ref={ref} style={{opacity}}>
             <img src={ingredient.image} alt={ingredient.name} />
-            <div className='card_price'>
+            <div className={styles.card_price}>
                 {ingredient.price}
                 <CurrencyIcon type="primary" />
             </div>
             <span>{ingredient.name}</span>
-            {count && <div className='card_counter'>
+            {count && <div className={styles.card_counter}>
                 <Counter count={count} size="default" extraClass="m-1" />
             </div>}
         </div>

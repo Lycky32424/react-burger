@@ -1,4 +1,4 @@
-import { getIngredientsData } from "../apiRequests";
+import { prerareRequest } from "../apiRequests";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_ITEMS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_ITEMS_SUCCESS';
@@ -9,17 +9,19 @@ export function getIngredients() {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
         });
-        getIngredientsData().then(res => {
-            if (res) {
+        prerareRequest("ingredients").then(res => {
+            if (res.data) {
                 dispatch({
                     type: GET_INGREDIENTS_SUCCESS,
-                    ingredients: res
+                    ingredients: res.data
                 });
             } else {
                 dispatch({
                     type: GET_INGREDIENTS_FAILED
                 });
             }
+        }).catch((error) => {
+            throw new Error(`Ошибка ${error}`);
         });
     };
 }

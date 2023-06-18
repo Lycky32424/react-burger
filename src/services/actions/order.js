@@ -1,4 +1,4 @@
-import { postOrderRequest } from "../apiRequests";
+import { prerareRequest } from "../apiRequests";
 
 export const SET_TOTAL_COST = 'SET_TOTAL_COST';
 
@@ -23,7 +23,7 @@ export function postOrder(ingredients) {
         dispatch({
             type: POST_ORDER_REQUEST
         });
-        postOrderRequest(postData(ingredients)).then(res => {
+        prerareRequest("orders", postData(ingredients)).then(res => {
             if(res) {
                 dispatch({
                     type: POST_ORDER_SUCCESS,
@@ -34,6 +34,8 @@ export function postOrder(ingredients) {
                     type: POST_ORDER_FAILED
                 });
             }
+        }).catch((error) => {
+            throw new Error(`Ошибка ${error}`);
         });
     };
 }

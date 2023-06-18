@@ -1,6 +1,6 @@
 import React from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import './burger-constructor-ingredient.css';
+import styles from './burger-constructor-ingredient.module.css';
 import { useDrop, useDrag } from 'react-dnd';
 import PropTypes from "prop-types";
 import { useDispatch } from 'react-redux';
@@ -34,11 +34,11 @@ export default function BurgerConstructorIngredient ({ingredient, removeIngredie
         })
     })
 
-    const className = `${isHover ? 'hover' : ''}`;
+    const className = `${isHover ? styles.hover : ''}`;
 
     return (
         <li  key={ingredient.uuid} ref={dropTarget} className={className}>
-            <div className='li_constructor_ingredient' ref={dragRef} style={{opacity}}>
+            <div className={styles.li_constructor_ingredient} ref={dragRef} style={{opacity}}>
                 <DragIcon type="primary"/>
                 <ConstructorElement
                             text={ingredient.ingredient.name}
