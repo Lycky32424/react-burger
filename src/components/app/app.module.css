@@ -1,0 +1,13 @@
+.app {
+    background-color: #131316;
+    min-height: 100vh;
+}
+  
+.main {
+    display: flex;
+    gap: 40px;
+    flex-direction: row;
+    margin-left: 155px;
+    margin-right: 160px;
+}
+  

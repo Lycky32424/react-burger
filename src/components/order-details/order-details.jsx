@@ -1,11 +1,15 @@
 import React from 'react';
 import image from '../../images/graphics.png';
-import './order-details.css';
+import styles from './order-details.module.css';
+import { useSelector } from 'react-redux';
+
 
 export default function OrderDetails () {
+    const { order } = useSelector(state => state.order);
+
     return (
-        <div className='order-details'>
-            <p className="text text_type_digits-large mt-6">034536</p>
+        <div className={styles.order_details}>
+            <p className="text text_type_digits-large mt-6">{order}</p>
             <p className="text text_type_main-medium mb-8">
                 идентификатор заказа
             </p>

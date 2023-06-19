@@ -1,0 +1,27 @@
+.burger_constructor_list {
+    min-height: 200px;
+    max-height: calc(100vh - 460px);
+}
+
+.use_scroll {
+    overflow-y: scroll;
+}
+
+.ul_burger_constructor {
+    padding-left: 0;
+}
+
+.drop_area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.total_cost {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: absolute;
+    bottom: 30px;
+    right: 160px;
+}
